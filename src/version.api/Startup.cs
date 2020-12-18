@@ -11,8 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using t3winc.version.data;
+using t3winc.version.common.Interfaces;
+using t3winc.version.data.repos;
 
-namespace version.api
+namespace t3winc.version.api
 {
     public class Startup
     {
@@ -26,12 +31,14 @@ namespace version.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSingleton<Serilog.ILogger>(Log.Logger);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "version.api", Version = "v1" });
             });
+            services.AddDbContext<VersionContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IVersionRepo, VersionRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

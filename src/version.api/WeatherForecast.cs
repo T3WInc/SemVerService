@@ -1,6 +1,6 @@
 using System;
 
-namespace version.api
+namespace t3winc.version.api
 {
     public class WeatherForecast
     {
