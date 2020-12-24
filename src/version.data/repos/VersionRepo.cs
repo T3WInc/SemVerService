@@ -21,6 +21,7 @@ namespace t3winc.version.data.repos
             Log.Information("1. Check if the organization already exists");
             if (_context.Version.Any(e => e.Organization == organization))
             {
+                Log.Error($"{organization} already exists in the database.");
                 return "Sorry, This Organizaition already exits";
             }           
             
@@ -37,6 +38,20 @@ namespace t3winc.version.data.repos
             Log.Information("4. Return the guid");
             Log.Information("VersionRepo:NewRegistration:Completed");
             return guid.ToString();
+        }
+
+        public bool IsKeyValid(string key)
+        {
+            if (_context.Version.Any(e => e.Key == key))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int GetVersionId(string key)
+        {
+            return _context.Version.Where(e => e.Key == key).Select(e => e.Id).FirstOrDefault();                
         }
     }
 }
