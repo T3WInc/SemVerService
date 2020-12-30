@@ -7,11 +7,12 @@ namespace t3winc.version.common.Interfaces
 {
     public interface IProductRepo
     {
-        string NewProduct(int versionId, string name);
-        Product GetProduct(string name);
-        void IncrementMajor(string name);
-        void IncrementMinor(string name);
-        void IncrementPatch(string name);
+        bool ProductExist(int versionId, string product);
+        string NewProduct(int versionId, string product);
+        Product GetProduct(int versionId, string name);
+        void IncrementMajor(int versionId, string name);
+        void IncrementMinor(int versionId, string name);
+        void IncrementPatch(int versionId, string name);
 
     }
 }

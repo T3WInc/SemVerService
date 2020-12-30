@@ -15,7 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using t3winc.version.data;
 using t3winc.version.common.Interfaces;
-using t3winc.version.data.repos;
+using t3winc.version.data.Repos;
+using System.Reflection;
+using System.IO;
 
 namespace t3winc.version.api
 {
@@ -36,10 +38,14 @@ namespace t3winc.version.api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "version.api", Version = "v1" });
+                var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
+                c.IncludeXmlComments(filePath);
             });
             services.AddDbContext<VersionContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IVersionRepo, VersionRepo>();
             services.AddScoped<IProductRepo, ProductRepo>();
+            services.AddScoped<IBranchRepo, BranchRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

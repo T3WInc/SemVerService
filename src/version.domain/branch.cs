@@ -20,6 +20,7 @@ namespace t3winc.version.domain
         public int Minor { get; set; }
         public int Patch { get; set; }
         public int Revision { get; set; }
+        public string Suffix { get; set; }
 
         // Last calculated version number
         public string Version { get; set; }
