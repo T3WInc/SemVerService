@@ -5,4 +5,8 @@
     <RootNamespace>t3winc.version.common</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\version.domain\version.domain.csproj" />
+  </ItemGroup>
+
 </Project>

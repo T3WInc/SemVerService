@@ -20,7 +20,8 @@ namespace t3winc.version.data.Repos
         {
             ProductRepo repo = new ProductRepo(_context);
             var myProduct = repo.GetProductDomain(id, product);
-            return _context.Branch.Any(e => e.Name == branch && e.Product == myProduct);
+            var results = _context.Branch.Any(e => e.Name == branch && e.Product == myProduct);
+            return results;
         }
 
         internal Branch GetBranch(int version, string product, string branch)
@@ -30,30 +31,43 @@ namespace t3winc.version.data.Repos
             return _context.Branch.Where(e => e.Name == branch && e.Product == myProduct).FirstOrDefault();
         }
 
-        internal Branch NewBranch(int version, string product, string newbranch)
+        internal Branch NewBranch(int versionId, string productName, string newbranch)
         {
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
+            var product = _context.Product.Where(e => e.Version == version && e.Name == productName).FirstOrDefault();
             var suffix = VersionHelper.GetSuffix(newbranch);
             Branch branch = new Branch();
             switch (suffix)
             {
                 case "alpha":
+                    branch.Major = product.Major;
+                    branch.Minor = product.Minor;
                     branch.Minor++;
                     branch.Patch = 0;
                     branch.Revision = 0;
+                    branch.Suffix = "alpha";
                     break;
                 case "beta":
+                    branch.Major = product.Major;
+                    branch.Minor = product.Minor;
+                    branch.Patch = product.Patch;
                     branch.Patch++;
                     branch.Revision = 0;
+                    branch.Suffix = "beta";
                     break;
                 case "torn":
+                    branch.Major = product.Major;
                     branch.Major++;
                     branch.Minor = 0;
                     branch.Patch = 0;
                     branch.Revision = 0;
+                    branch.Suffix = "torn";
                     break;
             }
             branch.Version = $"{branch.Major}.{branch.Minor}.{branch.Patch}-{suffix}.{branch.Revision}";
             branch.Name = newbranch;
+            branch.Product = product;
+            branch.Status = "Active";
             _context.Branch.Add(branch);
             return branch;
         }

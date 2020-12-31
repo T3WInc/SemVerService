@@ -20,7 +20,7 @@ namespace t3winc.version.data.Repos
 
         public bool ProductExist(int versionId, string product)
         {
-            var version = _context.Version.Where(e => e.Id == versionId);
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
             return _context.Product.Any(e => e.Name == product && e.Version == version);
         }
 
@@ -47,7 +47,7 @@ namespace t3winc.version.data.Repos
 
         public _model.Product GetProduct(int versionId, string name)
         {
-            var version = _context.Version.Where(e => e.Id == versionId);
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
             var result = _context.Product.Where(e => e.Name == name && e.Version == version).FirstOrDefault();
             _model.Product product = new _model.Product();
             
@@ -62,9 +62,25 @@ namespace t3winc.version.data.Repos
             return product;
         }
 
+        public List<_model.Products> GetAllProducts(int versionId)
+        {
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
+            var result = _context.Product.Where(e => e.Version == version).ToList();
+            List<_model.Products> products = new List<_model.Products>();
+            foreach(Product product in result)
+            {
+                _model.Products _products = new _model.Products();
+                _products.Name = product.Name;
+                _products.Master = product.Master;
+                products.Add(_products);
+            }
+            
+            return products;
+        }
+
         public Product GetProductDomain(int versionId, string name)
         {
-            var version = _context.Version.Where(e => e.Id == versionId);
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
             return _context.Product.Where(e => e.Name == name && e.Version == version).FirstOrDefault();
         }
 
@@ -94,5 +110,6 @@ namespace t3winc.version.data.Repos
             result.Master = $"{result.Major}.{result.Minor}.{result.Patch}.{result.Revision}";
             _context.SaveChanges();
         }
+
     }
 }

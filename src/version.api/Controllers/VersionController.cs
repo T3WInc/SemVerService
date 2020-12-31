@@ -50,6 +50,7 @@ namespace t3winc.version.api.Controllers
         /// <param name="product">The product that has been setup for this organization.  Product must already exist.</param>
         /// <param name="branch">The branch that the code is being commited from this can be a new or existing branch.</param>
         /// <returns>The next version number for the product.</returns>
+        [HttpGet("{key}")]
         public IActionResult Get(string key, [FromQuery(Name = "Product")] string product, [FromQuery(Name = "Branch")] string branch)
         {
             var version = _repo.GetVersionId(key);

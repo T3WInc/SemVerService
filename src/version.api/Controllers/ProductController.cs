@@ -29,13 +29,25 @@ namespace t3winc.version.api.Controllers
         /// <param name="key">The Api Key from the Version Post call</param>
         /// <param name="product">The Name of the Product</param>
         /// <returns>Current Product Master Branch Version Numbers</returns>
-        [HttpGet("{key}")]
+        [HttpGet("{key}/product")]
         public IActionResult Get(string key, [FromQuery(Name = "Product")] string product)
         {
             var version = _verepo.GetVersionId(key);
             if (_verepo.IsKeyValid(key) && _repo.ProductExist(version, product))
             {
                 var result = _repo.GetProduct(version, product);
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("{key}")]
+        public IActionResult Get(string key)
+        {
+            var version = _verepo.GetVersionId(key);
+            if (_verepo.IsKeyValid(key))
+            {
+                var result = _repo.GetAllProducts(version);
                 return Ok(result);
             }
             return BadRequest();
