@@ -2,6 +2,12 @@
 This application determines the next semver version number based on the branch name
 It is very specific for the following workflow and if this is how you work as well then this code may work for you as well.
 
+# Swagger File
+Normally when we run the version.api from Visual Studio it by defaults will bring up the Swagger file which is a really easy way to see and test the interface.  However if I am running this from VS Code using a run command it of course does not bring up this page and I can never seem to remember what the actual path is cause I just don't do it enough is my guess.  So here is the full path.
+```
+https://localhost:5001/swagger/index.html
+```
+
 # Workflow
 _This does **NOT** follow or support git-flow, this workflow is based around the idea that we work on two kinds work:_
 1. **Features** which is new functionality, adding things to your program that it never did before.

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "version.client": {
+      "commandName": "Project",
+      "commandLineArgs": "\"c:\\repo\\SemVerServiceSample\\.git\" \"SemVerServiceSample\" \"d4756207-07ac-4ffa-beb0-3149ebe0fe19\""
+    }
+  }
+}

@@ -56,6 +56,12 @@ namespace t3winc.version.api.Controllers
             var version = _repo.GetVersionId(key);
             if (_repo.IsKeyValid(key) && _prodRepo.ProductExist(version, product))
             {
+                if (branch == "master")
+                {
+                    // We need to determine if this was the result of a pull request or merge.
+                    // We could check if there are any Active branches and if there is only one and is not the head I would say yes.
+                    // Close the Active branch and transfer the version info to the master branch.
+                }
                 var result = _repo.GetNextVersionNumber(version, product, branch);
                 return Ok(result);
             }
