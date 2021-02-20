@@ -15,7 +15,7 @@ namespace version.client
 
         public static void Main(string[] args)
         {
-            var semver = Environment.GetEnvironmentVariable("SemVerService", EnvironmentVariableTarget.User);
+            //var semver = Environment.GetEnvironmentVariable("SemVerService", EnvironmentVariableTarget.Machine);
             if (args == null || args.Length != 3)
             {
                 Console.WriteLine("Version-Client has Required Arguments");
@@ -25,25 +25,22 @@ namespace version.client
                                   "to all calls");
                 Console.WriteLine("3. guid - version key that you got when " +
                                   "registering the organization");
-                if (semver == null)
-                {
-                    Console.WriteLine("*************************************");
-                    Console.WriteLine("You also need to create an Environment ");
-                    Console.WriteLine("variable called SemVerService as this ");
-                    Console.WriteLine("will contain the final semVer version."); 
-                }
+
                 Console.WriteLine("***************************************");
                 Console.WriteLine();
                 Console.WriteLine("Press any key to close this window");
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            if (semver == null)
+        /*    if (semver == null)
             {
                 Console.WriteLine("*************************************");              
                 Console.WriteLine("You need to create an Environment ");
                 Console.WriteLine("variable called SemVerService as this ");
                 Console.WriteLine("will contain the final semVer version.");
+
+                Environment.SetEnvironmentVariable("SemVerService", "0.0.0.0", EnvironmentVariableTarget.Machine);
+                
                 
                 Console.WriteLine("*************************************");
                 Console.WriteLine();
@@ -51,11 +48,13 @@ namespace version.client
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-
+        */
             string path = args[0];
             string project = args[1];
             string versionKey = args[2];
             string returnValue = "";
+            string fileName = "SemVer.txt";
+            string fullPath = path + "/" + fileName;
             
             RepositoryViewModel repo = new RepositoryViewModel();
             //string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -97,10 +96,13 @@ namespace version.client
                 IRestResponse response = client.Execute(request);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    Environment.SetEnvironmentVariable("SemVerService", response.Content, EnvironmentVariableTarget.User);
+                    //Environment.SetEnvironmentVariable("SemVerService", response.Content, EnvironmentVariableTarget.User);
+                    returnValue = response.Content;
+                    File.WriteAllText(fullPath, returnValue);
                     Console.WriteLine(response.Content);                    
                 }
                 Console.WriteLine("Press any key to close");
+
                 Console.ReadKey();
             }
 
