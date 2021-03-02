@@ -10,17 +10,19 @@ def getTip(repo):
     parts = head.name.split('/')
     if (len(parts) == 4) :
         result = parts[2]+'/'+parts[3]
-    result = parts[2]+'/'+parts[3]
+    #result = parts[2]+'/'+parts[3]
     return result
 
 def sendToServer(branch):
     url = 'https://localhost:5001/api/Version/'+ key
     payload = {'Product': product, 'Branch': branch}
-    r = requests.get(url, params=payload)
+    r = requests.get(url, params=payload, verify=False)
+    
     print(r.url)
+    print(r.content)
 
 def main():
-    repo = pygit2.Repository('/home/ubuntu/repo/semverservicesample/.git')
+    repo = pygit2.Repository('/repo/semverservicesample/.git')
     branch = getTip(repo)
 
     print(branch)
