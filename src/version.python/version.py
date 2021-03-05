@@ -1,5 +1,8 @@
+#!/usr/bin/python
+
 import pygit2
 import requests
+import sys
 
 key="d4756207-07ac-4ffa-beb0-3149ebe0fe19"
 product="semverservicesample"
@@ -18,15 +21,20 @@ def sendToServer(branch):
     payload = {'Product': product, 'Branch': branch}
     r = requests.get(url, params=payload, verify=False)
     
-    print(r.url)
-    print(r.content)
+    #print(r.url)
+    #print(r.content)
+    return r.content
 
 def main():
+    print ('Total number of arguments:', format(len(sys.argv)))
+    print ('Argument List:', str(sys.argv))
+
     repo = pygit2.Repository('/repo/semverservicesample/.git')
     branch = getTip(repo)
 
-    print(branch)
-    sendToServer(branch)
+    #print(branch)
+    sys.argv[3]=(sendToServer(branch))
+    print ('Version Number Is:', str(sys.argv[3]))
 
 if __name__ == "__main__":
     main()
