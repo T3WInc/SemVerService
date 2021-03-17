@@ -1,0 +1,17 @@
+schemaVersion: '2.0.0'
+fileExistenceTests:
+  - name: 'Shell Script to Update Certificates Exists'
+    path: '/https/update_cert.sh'
+    shouldExist: false
+
+  - name: 'version.api.dll'
+    path: '/app/version.api.dll'
+    shouldExist: true
+
+  - name: 'Project File should not exist'
+    path: 'src/version.api/version.api.csproj'
+    shouldExist: false
+
+  - name: 'Startup Source Should not exist'
+    path: 'src/version.api/Startup.cs'
+    shouldExist: false

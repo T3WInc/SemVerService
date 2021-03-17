@@ -1,0 +1,31 @@
+version: '3.3'
+
+networks:
+  app-net:
+    external:
+      name: nat
+
+services:
+  version.api:
+    image: schulzdl/version.api:${RELEASE}
+    container_name: version.api
+    restart: always
+    expose:
+      - 443
+    environment:
+      - "VIRTUAL_HOST=version.t3winc.com"
+      - "VIRTUAL_PORT=443"
+      - "VIRTUAL_PROTO=https"
+      - "LETSENCRYPT_HOST=version.t3winc.com"
+      - "ASPNETCORE_ENVIRONMENT=Development"
+      - "BASE_RETURN_URL=https://version.t3winc.com"
+      - "SEQ_API_TOKEN="
+      - "ASPNETCORE_URLS=https://+:443"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Password=thankYou99"
+      - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/version.t3winc.com.pfx"
+      - "VERSION_SEMVER=${semver}"
+    restart: always
+    volumes:
+      - /docker/proxy_data/etc/nginx/certs/version.t3winc.com:/https
+    networks:
+      - app-net
