@@ -24,7 +24,9 @@ pipeline {
         }
 
         stage("Build") {
-            sh "docker image build --no-cache --rm -f ./build/Dockerfile -t version.api --build-arg SONAR_PROJECT_VERSION=${params.semver}"
+            steps {
+                sh "docker image build --no-cache --rm -f ./build/Dockerfile -t version.api --build-arg SONAR_PROJECT_VERSION=${params.semver}"
+            }
         }
 
         stage('Test-Image'){
