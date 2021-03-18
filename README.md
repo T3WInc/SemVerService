@@ -28,3 +28,8 @@ Example:
 ```
 Major/UpdatedFramework
 ```
+# Swagger Pages
+In order to test the initial page on docker you will want to run the swagger pages which will give you a visual if the site is at least up and running and the api itself really has to GUI interface.  Here is how you would see this on the staging docker instance.
+```
+https://version.t3winc.com/swagger/index.html
+```
