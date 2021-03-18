@@ -24,7 +24,7 @@ COPY ["src/version.api/version.api.csproj", "version.api/version.api.csproj"]
 COPY ["src/version.common/version.common.csproj", "version.common/version.common.csproj"]
 COPY ["src/version.data/version.data.csproj", "version.data/version.data.csproj"]
 COPY ["src/version.domain/version.domain.csproj", "version.domain/version.domain.csproj"]
-COPY ["src/version-server.sln","version-server.sln"]
+COPY ["src/semverservice.sln","semverservice.sln"]
 RUN dotnet restore
 
 # Copy the rest of the files over
