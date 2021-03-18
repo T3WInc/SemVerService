@@ -12,12 +12,12 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 WORKDIR /src
 
 # Start Sonar Scanner
-RUN dotnet sonarscanner begin \
-    /k:"SemVer-Service" \
-    /v:"v$SONAR_PROJECT_VERSION" \
-    /d:sonar.host.url="https://sonar.t3winc.com" \
-    /d:sonar.login="b4c0dd76854682cd8e6a81061044b0ab0dba2c9c" \
-    /d:sonar.cs.opencover.reportsPaths=/coverage.opencover.xml
+#RUN dotnet sonarscanner begin \
+#    /k:"SemVer-Service" \
+#    /v:"v$SONAR_PROJECT_VERSION" \
+#    /d:sonar.host.url="https://sonar.t3winc.com" \
+#    /d:sonar.login="b4c0dd76854682cd8e6a81061044b0ab0dba2c9c" \
+#    /d:sonar.cs.opencover.reportsPaths=/coverage.opencover.xml
 
 # Restore NuGet packages
 COPY ["src/version.api/version.api.csproj", "version.api/"]
@@ -34,7 +34,7 @@ COPY src/. .
 RUN dotnet publish -c Release -o /out/
 
 # End Sonar Scanner
-RUN dotnet sonarscanner end /d:Sonar.login="b4c0dd76854682cd8e6a81061044b0ab0dba2c9c"
+#RUN dotnet sonarscanner end /d:Sonar.login="b4c0dd76854682cd8e6a81061044b0ab0dba2c9c"
 
 FROM base AS final
 WORKDIR /app
