@@ -29,7 +29,7 @@ def main():
     print ('Total number of arguments:', format(len(sys.argv)))
     print ('Argument List:', str(sys.argv))
 
-    repo = pygit2.Repository('/repo/semverservicesample/.git')
+    repo = pygit2.Repository('/home/ubuntu/repo/semverservicesample/.git')
     branch = getTip(repo)
 
     #print(branch)
