@@ -1,6 +1,6 @@
 ARG SONAR_PROJECT_VERSION
 
-FROM mcr.microsoft.com/dotnet/runtime:5.0 as base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 as base
 ARG SONAR_PROJECT_VERSION
 WORKDIR /app
 EXPOSE 80
