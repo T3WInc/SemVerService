@@ -23,6 +23,8 @@ namespace t3winc.version.api
 {
     public class Startup
     {
+        private static readonly string _env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        private static readonly string _connectName = (String.IsNullOrEmpty(_env) ? "DefaultConnection" : _env);
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,7 +44,7 @@ namespace t3winc.version.api
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
                 c.IncludeXmlComments(filePath);
             });
-            services.AddDbContext<VersionContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<VersionContext>(options => options.UseSqlServer(Configuration.GetConnectionString(_connectName)));
             services.AddScoped<IVersionRepo, VersionRepo>();
             services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<IBranchRepo, BranchRepo>();

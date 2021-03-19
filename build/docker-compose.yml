@@ -7,8 +7,8 @@ networks:
 
 services:
   version.api:
-    image: schulzdl/version.api:${RELEASE}
-    container_name: version.api
+    image: schulzdl/semverservice:${RELEASE}
+    container_name: semverservice
     restart: always
     expose:
       - 443
@@ -24,6 +24,7 @@ services:
       - "ASPNETCORE_Kestrel__Certificates__Default__Password=thankYou99"
       - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/version.t3winc.com.pfx"
       - "VERSION_SEMVER=${semver}"
+      - "ASPNETCORE_ENVIRONMENT=Development"
     restart: always
     volumes:
       - /docker/proxy_data/etc/nginx/certs/version.t3winc.com:/https
