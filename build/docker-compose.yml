@@ -24,7 +24,6 @@ services:
       - "ASPNETCORE_Kestrel__Certificates__Default__Password=thankYou99"
       - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/version.t3winc.com.pfx"
       - "VERSION_SEMVER=${semver}"
-      - "ASPNETCORE_ENVIRONMENT=Development"
     restart: always
     volumes:
       - /docker/proxy_data/etc/nginx/certs/version.t3winc.com:/https
