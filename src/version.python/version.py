@@ -17,7 +17,7 @@ def getTip(repo):
     return result
 
 def sendToServer(branch):
-    url = 'https://localhost:5001/api/Version/'+ key
+    url = 'https://version.t3winc.com/api/Version/'+ key
     payload = {'Product': product, 'Branch': branch}
     r = requests.get(url, params=payload, verify=False)
     
@@ -26,6 +26,17 @@ def sendToServer(branch):
     return r.content
 
 def main():
+    if (len(sys.argv) < 4):
+        print('Version-Client has Required Arguments')
+        print('********************************************************************')
+        print('1. path to the .git repository')
+        print('2. project name which must be consistant to all calls')
+        print('3. guid - version key that you got when registering the organization')
+        print('********************************************************************')
+        print()
+
+        sys.exit("MISSING ARGUMENTS")
+
     print ('Total number of arguments:', format(len(sys.argv)))
     print ('Argument List:', str(sys.argv))
 
