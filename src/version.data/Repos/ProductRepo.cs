@@ -86,7 +86,7 @@ namespace t3winc.version.data.Repos
 
         public void IncrementMajor(int versionId, string product)
         {
-            var version = _context.Version.Where(e => e.Id == versionId);
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
             var result = _context.Product.Where(e => e.Name == product && e.Version == version).FirstOrDefault();
             result.Major++;
             result.Master = $"{result.Major}.{result.Minor}.{result.Patch}.{result.Revision}";
@@ -95,7 +95,7 @@ namespace t3winc.version.data.Repos
 
         public void IncrementMinor(int versionId, string product)
         {
-            var version = _context.Version.Where(e => e.Id == versionId);
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
             var result = _context.Product.Where(e => e.Name == product && e.Version == version).FirstOrDefault();
             result.Minor++;
             result.Master = $"{result.Major}.{result.Minor}.{result.Patch}.{result.Revision}";
@@ -104,7 +104,7 @@ namespace t3winc.version.data.Repos
 
         public void IncrementPatch(int versionId, string product)
         {
-            var version = _context.Version.Where(e => e.Id == versionId);
+            var version = _context.Version.Where(e => e.Id == versionId).FirstOrDefault();
             var result = _context.Product.Where(e => e.Name == product && e.Version == version).FirstOrDefault();
             result.Patch++;
             result.Master = $"{result.Major}.{result.Minor}.{result.Patch}.{result.Revision}";
