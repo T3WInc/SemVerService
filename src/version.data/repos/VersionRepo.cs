@@ -38,7 +38,7 @@ namespace t3winc.version.data.Repos
 
             Log.Information("4. Return the guid");
             Log.Information("VersionRepo:NewRegistration:Completed");
-            return guid.ToString();
+            return registration.Key;
         }
 
         public string GetNextVersionNumber(int version, string product, string branch)
@@ -77,6 +77,21 @@ namespace t3winc.version.data.Repos
         public int GetVersionId(string key)
         {
             return _context.Version.Where(e => e.Key == key).Select(e => e.Id).FirstOrDefault();                
+        }
+
+        public void DeleteOrganization(string key)
+        {
+            var product = _context.Product.Where(e => e.Name == "MyProduct").FirstOrDefault();
+            var branches = product.Branches.ToList();
+            var organization = _context.Version.Where(e => e.Key == key).FirstOrDefault();
+
+            // Now let us start to delete them.....
+            _context.Remove(branches);
+            _context.Remove(product);
+            _context.Remove(organization);
+
+            _context.SaveChanges();
+
         }
     }
 }

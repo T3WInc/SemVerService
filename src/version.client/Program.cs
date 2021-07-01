@@ -10,7 +10,8 @@ namespace version.client
 {
     class Program
     {
-        static string key = "d4756207-07ac-4ffa-beb0-3149ebe0fe19";
+        //static string key = "d4756207-07ac-4ffa-beb0-3149ebe0fe19"; // localhost
+        static string key = "5f212ccb-854b-427c-8f6d-a95a0bd8e52d"; // version.t3winc.com
         static string branch = "";
 
         public static void Main(string[] args)
@@ -88,7 +89,7 @@ namespace version.client
                 }
                 
                 Console.WriteLine($"{branch} is going to be sent to the api.");
-                var client = new RestClient("https://localhost:5001/");
+                var client = new RestClient("https://version.t3winc.com/");
 
                 var request = new RestRequest($"api/Version/{key}", Method.GET);
                 request.AddParameter("Product", project);

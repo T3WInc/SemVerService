@@ -69,6 +69,7 @@ namespace t3winc.version.data.Repos
             branch.Product = product;
             branch.Status = "Active";
             _context.Branch.Add(branch);
+            _context.SaveChanges();
             return branch;
         }
     }
