@@ -10,5 +10,6 @@ namespace t3winc.version.common.Interfaces
         bool IsKeyValid(string key);
         int GetVersionId(string key);
         string GetNextVersionNumber(int version, string product, string branch);
+        void DeleteOrganization(string key);
     }
 }

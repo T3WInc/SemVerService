@@ -82,7 +82,7 @@ namespace t3winc.version.api.Controllers
         /// <param name="product">The name of the Product which should match the git repo name</param>
         /// <param name="increment">Major, Minor or Patch anything else is invalid</param>
         /// <returns>Code 200 if sucessfull</returns>
-        [HttpPut("{key}")]
+        [HttpPut]
         public IActionResult Put(string key, [FromQuery(Name = "Product")] string product, [FromQuery(Name = "Increment")] string increment)
         {
             if (_verepo.IsKeyValid(key))

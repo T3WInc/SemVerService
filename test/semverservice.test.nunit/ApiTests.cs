@@ -3,6 +3,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using t3winc.version.data.Repos;
 using t3winc.version.data;
+using t3winc.version.common.Interfaces;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,17 +15,19 @@ namespace semverservice.test.nunit
         private string _product;
         private string _url;
 
+
         public ApiTests()
         {
             _product = "MyProduct";
             //_url = "https://version.t3winc.com";
             _url = "https://localhost:5001";
+
         }
 
         [OneTimeSetUp]
         public void Setup()
         {
-            Helper.Setup.Execute(_url, _product);
+            _key = Helper.Setup.Execute(_url, _product);
         }
 
         [Test]
@@ -36,10 +39,11 @@ namespace semverservice.test.nunit
         [OneTimeTearDown]
         public void Cleanup()
         {
-            DbContextOptions<VersionContext> options = new DbContextOptions<VersionContext>();
-            var context = new VersionContext(options, Log.Logger);
-            var data = new VersionRepo(context);
-
+            var connectionstring = "Server=stage.t3winc.com,1433;Database=VersionDb;User Id=sa;Password=thankYou99";
+            var optionBuilder = new DbContextOptionsBuilder<VersionContext>()
+                                              .UseSqlServer(connectionstring);
+            VersionContext dbContext = new VersionContext(optionBuilder.Options, Log.Logger);
+            var data = new VersionRepo(dbContext);
             data.DeleteOrganization(_key);
         }
     }

@@ -82,16 +82,20 @@ namespace t3winc.version.data.Repos
         public void DeleteOrganization(string key)
         {
             var product = _context.Product.Where(e => e.Name == "MyProduct").FirstOrDefault();
-            var branches = product.Branches.ToList();
             var organization = _context.Version.Where(e => e.Key == key).FirstOrDefault();
-
-            // Now let us start to delete them.....
-            _context.Remove(branches);
-            _context.Remove(product);
-            _context.Remove(organization);
-
+            if (product.Branches is null) 
+            {
+                _context.Remove(product);
+                _context.Remove(organization);
+            }
+            else
+            {
+                var branches = product.Branches.ToList();
+                _context.Remove(branches);
+                _context.Remove(product);
+                _context.Remove(organization);
+            }
             _context.SaveChanges();
-
         }
     }
 }
